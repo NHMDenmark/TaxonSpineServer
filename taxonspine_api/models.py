@@ -51,7 +51,7 @@ class Taxon(models.Model):
     sp_taxonnr = models.CharField(max_length=255)
     sp_taxonnrsource = models.CharField(max_length=255)
     timestamp_created = models.DateTimeField(auto_now_add=True,auto_now=False, blank=True)
-    timestamp_updated = models.DateTimeField(auto_now=True,blank=True)
+    timestamp_updated = models.DateTimeField(auto_now=True,blank=True, default=None)
 
     def __str__(self):
         return self.dassco_fullname

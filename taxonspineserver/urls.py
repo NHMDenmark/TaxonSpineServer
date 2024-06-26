@@ -27,10 +27,17 @@
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers 
+
 from taxonspine_api import urls as taxonspine_urls
+from taxonspine_api import views
+
+router = routers.DefaultRouter()
+router.register('taxon', views.TaxonViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('taxonspine/', include(taxonspine_urls))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('taxonspine/', include(taxonspine_urls)),
+    path('', include(router.urls)),
 ]

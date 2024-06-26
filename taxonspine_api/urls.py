@@ -14,10 +14,9 @@
 
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter 
-from .views import TaxonViewSet 
+from taxonspine_api import views
 
 router = DefaultRouter()
-router.register(r'taxon', TaxonViewSet)
 
 urlpatterns = [
     path('api', include(router.urls)),

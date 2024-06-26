@@ -12,10 +12,14 @@
   PURPOSE: Viewset for models to be served and accessed through api.  
 """
 
-from rest_framework import viewsets 
+from rest_framework import viewsets, permissions 
 from .models import Taxon
 from .serializers import TaxonSerializer
 
 class TaxonViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint for editing or viewing a taxon
+    '''
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Taxon.objects.all()
     serializer_class = TaxonSerializer
