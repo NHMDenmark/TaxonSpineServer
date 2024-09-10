@@ -13,6 +13,7 @@
 """
 
 from django.db import models
+import uuid
 
 # Create your models here.
 
@@ -25,31 +26,31 @@ class Taxon(models.Model):
     In cases of no overlap either the dwc or the specify fields are empty, but the dwc fields then never. 
     '''
 
-    dassco_taxonID = models.CharField(max_length=255, null=False)
-    dassco_taxonID = models.CharField(max_length=255)
+    dassco_taxonID = models.CharField(max_length=32) #models.UUIDField(default=uuid.uuid4, null=False)
     dassco_name = models.CharField(max_length=255)
-    dassco_author = models.CharField(max_length=255)
+    dassco_author = models.CharField(max_length=255, null=True)
     dassco_fullname = models.CharField(max_length=255)
-    dassco_epithet = models.CharField(max_length=255)
-    dassco_rankid = models.CharField(max_length=255)
-    dassco_extinct = models.CharField(max_length=255)
-    dwc_taxonID = models.CharField(max_length=255)
-    dwc_scientificName = models.CharField(max_length=255)
-    dwc_scientificNameAuthorship = models.CharField(max_length=255)
-    dwc_parentNameUsageID = models.CharField(max_length=255)
-    dwc_parentNameUsage = models.CharField(max_length=255)
-    dwc_acceptedNameUsageID = models.CharField(max_length=255)
-    dwc_acceptedNameUsage = models.CharField(max_length=255)
-    dwc_taxonomicStatus = models.CharField(max_length=255)
-    dwc_taxonRank = models.CharField(max_length=255)
-    sp_taxonID = models.CharField(max_length=255)
-    sp_fullname = models.CharField(max_length=255)
-    sp_author = models.CharField(max_length=255)
-    sp_rankid = models.CharField(max_length=255)
-    sp_rankname = models.CharField(max_length=255)
-    sp_parentname = models.CharField(max_length=255)
-    sp_taxonnr = models.CharField(max_length=255)
-    sp_taxonnrsource = models.CharField(max_length=255)
+    dassco_epithet = models.CharField(max_length=255, null=True)
+    dassco_rankid = models.CharField(max_length=4)
+    dassco_acceptedid = models.IntegerField(null=True)
+    dassco_extinct = models.BooleanField(null=True)
+    dwc_taxonID = models.IntegerField(null=True)
+    dwc_scientificName = models.CharField(max_length=255, null=True)
+    dwc_scientificNameAuthorship = models.CharField(max_length=255, null=True)
+    dwc_parentNameUsageID = models.IntegerField(null=True)
+    dwc_parentNameUsage = models.CharField(max_length=255, null=True)
+    dwc_acceptedNameUsageID = models.IntegerField(null=True)
+    dwc_acceptedNameUsage = models.CharField(max_length=255, null=True)
+    dwc_taxonomicStatus = models.CharField(max_length=32)
+    dwc_taxonRank = models.CharField(max_length=16, null=True)
+    sp_taxonID = models.IntegerField(null=True)
+    sp_fullname = models.CharField(max_length=255, null=True)
+    sp_author = models.CharField(max_length=255, null=True)
+    sp_rankid = models.CharField(max_length=4)
+    sp_rankname = models.CharField(max_length=16, null=True)
+    sp_parentname = models.CharField(max_length=255, null=True)
+    sp_taxonnr = models.CharField(max_length=255, null=True)
+    sp_taxonnrsource = models.CharField(max_length=255, null=True)
     timestamp_created = models.DateTimeField(auto_now_add=True,auto_now=False, blank=True)
     timestamp_updated = models.DateTimeField(auto_now=True,blank=True)
 

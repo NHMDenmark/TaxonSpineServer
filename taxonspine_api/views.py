@@ -15,6 +15,9 @@
 from rest_framework import viewsets, permissions 
 from .models import Taxon
 from .serializers import TaxonSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import TaxonFilter
+from typing import Optional
 
 class TaxonViewSet(viewsets.ModelViewSet):
     '''
@@ -23,3 +26,30 @@ class TaxonViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Taxon.objects.all()
     serializer_class = TaxonSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TaxonFilter       
+    search_fields = ['dassco_name']
+
+    def get_queryset(self):
+        dassco_name: Optional[str] = self.request.query_params.get("dassco_name", None)
+        if dassco_name is not None: 
+            return Taxon.objects.filter(dassco_name=dassco_name)
+        
+        dassco_author: Optional[str] = self.request.query_params.get("dassco_author", None)
+        if dassco_author is not None: 
+            return Taxon.objects.filter(dassco_author=dassco_author)
+        
+        dassco_fullname: Optional[str] = self.request.query_params.get("dassco_fullname", None)
+        if dassco_fullname is not None: 
+            return Taxon.objects.filter(dassco_fullname=dassco_fullname)
+        
+        dassco_epithet: Optional[str] = self.request.query_params.get("dassco_epithet", None)
+        if dassco_epithet is not None: 
+            return Taxon.objects.filter(dassco_epithet=dassco_epithet)
+        
+        dassco_rankid: Optional[str] = self.request.query_params.get("dassco_rankid", None)
+        if dassco_rankid is not None: 
+            return Taxon.objects.filter(dassco_rankid=dassco_rankid)
+
+
+        return super().get_queryset()
